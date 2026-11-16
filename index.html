@@ -28,6 +28,102 @@
   "inLanguage": "zh-CN"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "乐言输入法和搜狗、百度、微信输入法有什么不同？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "乐言输入法的键盘不联网，输入内容不上传；没有账号、广告和内购。词典、语言模型和手写识别都装在键盘里，在手机本地完成。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "iPhone 上有不联网的中文输入法吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "有。乐言输入法的键盘不联网，拼音解码、联想和手写识别都在手机本地完成，输入内容不会上传。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "乐言输入法需要开启“完全访问”吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "不需要。乐言输入法不申请任何权限，不开“完全访问”也能正常输入。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "iPhone 上能用小鹤双拼、自然码双拼吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。乐言输入法支持 8 种双拼方案：微软、小鹤、自然码、搜狗、智能ABC、拼音加加、紫光、国标。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "iPhone 有五笔输入法吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "乐言输入法支持五笔86。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "支持九宫格拼音吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "支持。全拼有 26键和 9键两种布局。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "能手写输入吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。手写识别在手机本地完成，不联网。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "能打繁体字吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "能。可以一键切换简体和繁体，繁体按台湾用字转换。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "乐言输入法收费吗？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "免费下载，没有内购和广告，也不需要注册账号。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "支持哪些 iOS 版本？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "支持 iOS 16 及以上。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "怎么启用乐言输入法？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "安装后打开“设置” > “通用” > “键盘” > “键盘”，选择“添加新键盘”，在第三方键盘中选择“乐言输入法”，然后在输入框长按地球键切换。"
+      }
+    }
+  ]
+}
+</script>
 <style>
   :root {
     --bg: #ffffff; --bg-alt: #f5f7fa; --surface: #ffffff; --fg: #1d1d1f; --muted: #6e6e73;
@@ -168,6 +264,16 @@
   footer nav { display: flex; gap: 24px; }
   footer nav a { color: var(--muted); }
   footer nav a:hover { color: var(--fg); }
+
+  /* FAQ */
+  .faq { max-width: 760px; margin: 0 auto; display: grid; gap: 12px; }
+  .faq details { background: var(--surface); border-radius: 18px; box-shadow: var(--shadow); padding: 0 22px; }
+  .faq summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+                 padding: 20px 0; font-size: 17px; font-weight: 600; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: "+"; flex: none; font-size: 22px; font-weight: 400; color: var(--accent); transition: transform .2s; }
+  .faq details[open] summary::after { transform: rotate(45deg); }
+  .faq details p { margin: 0 0 20px; color: var(--muted); font-size: 16px; }
 
   section.first { padding-top: 230px; }
   @media (max-width: 860px) {
@@ -363,6 +469,26 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.6-.75 3-.75s1.79.75 3.01.72c1.25-.02 2.04-1.13 2.8-2.25.88-1.29 1.24-2.54 1.26-2.6-.03-.01-2.42-.93-2.47-3.71zM14.07 5.85c.64-.77 1.07-1.85.95-2.92-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.78-.97 2.83 1.02.08 2.07-.52 2.71-1.29z"/></svg>
         在 App Store 下载
       </a>
+    </div>
+  </section>
+  <section id="faq" class="alt">
+    <div class="wrap">
+      <div class="head">
+        <h2>常见问题</h2>
+      </div>
+      <div class="faq">
+        <details><summary>乐言输入法和搜狗、百度、微信输入法有什么不同？</summary><p>乐言输入法的键盘不联网，输入内容不上传；没有账号、广告和内购。词典、语言模型和手写识别都装在键盘里，在手机本地完成。</p></details>
+        <details><summary>iPhone 上有不联网的中文输入法吗？</summary><p>有。乐言输入法的键盘不联网，拼音解码、联想和手写识别都在手机本地完成，输入内容不会上传。</p></details>
+        <details><summary>乐言输入法需要开启“完全访问”吗？</summary><p>不需要。乐言输入法不申请任何权限，不开“完全访问”也能正常输入。</p></details>
+        <details><summary>iPhone 上能用小鹤双拼、自然码双拼吗？</summary><p>能。乐言输入法支持 8 种双拼方案：微软、小鹤、自然码、搜狗、智能ABC、拼音加加、紫光、国标。</p></details>
+        <details><summary>iPhone 有五笔输入法吗？</summary><p>乐言输入法支持五笔86。</p></details>
+        <details><summary>支持九宫格拼音吗？</summary><p>支持。全拼有 26键和 9键两种布局。</p></details>
+        <details><summary>能手写输入吗？</summary><p>能。手写识别在手机本地完成，不联网。</p></details>
+        <details><summary>能打繁体字吗？</summary><p>能。可以一键切换简体和繁体，繁体按台湾用字转换。</p></details>
+        <details><summary>乐言输入法收费吗？</summary><p>免费下载，没有内购和广告，也不需要注册账号。</p></details>
+        <details><summary>支持哪些 iOS 版本？</summary><p>支持 iOS 16 及以上。</p></details>
+        <details><summary>怎么启用乐言输入法？</summary><p>安装后打开“设置” &gt; “通用” &gt; “键盘” &gt; “键盘”，选择“添加新键盘”，在第三方键盘中选择“乐言输入法”，然后在输入框长按地球键切换。</p></details>
+      </div>
     </div>
   </section>
 </main>
