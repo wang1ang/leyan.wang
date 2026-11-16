@@ -3,9 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>乐言输入法</title>
+<title>乐言输入法 - iOS 离线中文输入法</title>
 <meta name="description" content="乐言输入法是一款 iOS 中文输入法，支持全拼（26键、9键）、8 种双拼、五笔86 和手写。输入在手机本地完成，键盘不联网，不上传输入内容；没有账号、广告和内购。">
 <link rel="canonical" href="https://leyan.wang/">
+<link rel="icon" href="img/icon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#05080d" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="乐言输入法">
+<meta property="og:description" content="iOS 中文输入法：全拼、双拼、五笔、手写。不联网，不上传输入内容，没有广告和内购。">
+<meta property="og:image" content="https://leyan.wang/img/icon.png">
+<meta property="og:url" content="https://leyan.wang/">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -16,101 +24,358 @@
   "description": "iOS 中文输入法，支持全拼（26键、9键）、微软/小鹤/自然码/搜狗/智能ABC/拼音加加/紫光/国标双拼、五笔86 和手写。输入在手机本地完成，键盘不联网，不上传输入内容；没有账号、广告和内购。",
   "url": "https://leyan.wang/",
   "downloadUrl": "https://apps.apple.com/cn/app/id6805488406",
+  "image": "https://leyan.wang/img/icon.png",
   "inLanguage": "zh-CN"
 }
 </script>
 <style>
-  :root { --bg: #ffffff; --fg: #1d1d1f; --muted: #6e6e73; --link: #0066cc; --rule: #d2d2d7; }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #000000; --fg: #f5f5f7; --muted: #a1a1a6; --link: #2997ff; --rule: #424245; }
+  :root {
+    --bg: #ffffff; --bg-alt: #f5f7fa; --surface: #ffffff; --fg: #1d1d1f; --muted: #6e6e73;
+    --accent: #1a6db0; --on-accent: #ffffff; --tint: #eaf4fc; --tint-strong: #d6eaf9;
+    --rule: rgba(0,0,0,.08); --nav: rgba(255,255,255,.72);
+    --shadow: 0 1px 2px rgba(16,40,70,.05), 0 10px 30px rgba(16,40,70,.08);
+    --panel-dark: linear-gradient(160deg, #1b2a3d 0%, #0b121c 100%);
+    --panel-light: linear-gradient(160deg, #e6f2fc 0%, #cfe5f7 100%);
   }
-  body { margin: 0; background: var(--bg); color: var(--fg);
-         font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif; }
-  header { max-width: 640px; margin: 0 auto; padding: 96px 16px 48px; text-align: center; }
-  h1 { font-size: 40px; margin: 0 0 12px; }
-  header p { color: var(--muted); font-size: 18px; line-height: 1.6; margin: 0 0 32px; }
-  nav a { color: var(--link); text-decoration: none; margin: 0 12px; font-size: 17px; }
-  nav a:hover { text-decoration: underline; }
-  main { max-width: 640px; margin: 0 auto; padding: 0 16px 96px; }
-  section { border-top: 1px solid var(--rule); padding: 24px 0; }
-  h2 { font-size: 22px; margin: 0 0 12px; }
-  ul { margin: 0; padding-left: 1.2em; }
-  li { font-size: 17px; line-height: 1.7; }
-  footer { text-align: center; padding-bottom: 64px; }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #05080d; --bg-alt: #0b1119; --surface: #121a24; --fg: #f5f5f7; --muted: #9aa3ad;
+      --accent: #84c6f3; --on-accent: #05080d; --tint: #10263b; --tint-strong: #163450;
+      --rule: rgba(255,255,255,.09); --nav: rgba(5,8,13,.72);
+      --shadow: 0 0 0 1px rgba(255,255,255,.06);
+      --panel-light: linear-gradient(160deg, #1d3550 0%, #12243a 100%);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { margin: 0; background: var(--bg); color: var(--fg); line-height: 1.6;
+         font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+         -webkit-font-smoothing: antialiased; }
+  a { color: var(--accent); text-decoration: none; }
+  img { max-width: 100%; height: auto; display: block; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  .nav { position: sticky; top: 0; z-index: 10; background: var(--nav);
+         -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
+         border-bottom: 1px solid var(--rule); }
+  .nav .wrap { display: flex; align-items: center; height: 56px; gap: 10px; }
+  .nav .brand { display: flex; align-items: center; gap: 10px; color: var(--fg); font-weight: 600; font-size: 17px; }
+  .nav .brand img { width: 28px; height: 28px; border-radius: 7px; }
+  .nav .links { margin-left: auto; display: flex; align-items: center; gap: 24px; font-size: 14px; }
+  .nav .links a.plain { color: var(--muted); }
+  .nav .links a.plain:hover { color: var(--fg); }
+  .pill { display: inline-flex; align-items: center; border-radius: 999px; font-weight: 600; white-space: nowrap;
+          background: var(--accent); color: var(--on-accent); font-size: 14px; padding: 6px 16px; }
+
+  /* Hero */
+  .hero { position: relative;
+          background: radial-gradient(1000px 560px at 78% 8%, var(--tint-strong), transparent 62%), var(--bg); }
+  .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 48px; align-items: center; padding-top: 80px; }
+  .hero .copy { padding-bottom: 96px; }
+  .eyebrow { display: inline-block; font-size: 14px; font-weight: 600; color: var(--accent); background: var(--tint);
+             border-radius: 999px; padding: 5px 12px; margin-bottom: 20px; }
+  .hero h1 { font-size: clamp(44px, 6.4vw, 72px); line-height: 1.08; letter-spacing: -.02em; margin: 0 0 20px; font-weight: 700; }
+  .hero h1 span { display: block; color: var(--accent); font-size: .62em; margin-top: 10px; letter-spacing: -.01em; }
+  .hero .lead { font-size: clamp(17px, 2vw, 20px); color: var(--muted); margin: 0 0 32px; max-width: 30em; }
+  .cta { display: inline-flex; align-items: center; gap: 10px; background: var(--fg); color: var(--bg);
+         font-size: 17px; font-weight: 600; padding: 15px 28px; border-radius: 999px; transition: transform .15s, opacity .15s; }
+  .cta:hover { opacity: .9; transform: translateY(-1px); }
+  .cta svg { width: 20px; height: 20px; fill: currentColor; }
+  .cta-note { margin: 14px 0 0; font-size: 14px; color: var(--muted); }
+  .checks { display: flex; flex-wrap: wrap; gap: 10px 22px; margin: 36px 0 0; padding: 0; list-style: none; font-size: 15px; }
+  .checks li { display: flex; align-items: center; gap: 7px; }
+  .checks svg { width: 18px; height: 18px; flex: none; color: var(--accent); }
+
+  .phone { position: relative; z-index: 2; justify-self: center; align-self: end; width: min(330px, 100%); margin-bottom: -150px; padding: 11px; border-radius: 54px;
+           background: linear-gradient(145deg, #4a4f57, #16181c);
+           box-shadow: 0 40px 80px rgba(16,40,70,.30), inset 0 0 0 1.5px rgba(255,255,255,.14); }
+  .phone img { border-radius: 44px; }
+
+  /* Sections */
+  section { padding: 104px 0; }
+  section.alt { background: var(--bg-alt); }
+  .head { text-align: center; max-width: 640px; margin: 0 auto 56px; }
+  .kicker { font-size: 15px; font-weight: 600; color: var(--accent); margin: 0 0 10px; }
+  h2 { font-size: clamp(30px, 4.4vw, 44px); line-height: 1.2; letter-spacing: -.015em; margin: 0 0 14px; }
+  .head p.sub { font-size: 18px; color: var(--muted); margin: 0; }
+
+  /* Showcase */
+  .show { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+  .show + .show { margin-top: 96px; }
+  .show.flip { grid-template-columns: .85fr 1.15fr; }
+  .show.flip .panel { order: 2; }
+  .panel { border-radius: 32px; padding: 56px 44px 0; background: var(--panel-dark); overflow: hidden; }
+  .panel.light { background: var(--panel-light); }
+  .panel img { border-radius: 26px 26px 0 0; box-shadow: 0 -4px 30px rgba(0,0,0,.25); }
+  .num { font-size: 14px; font-weight: 600; color: var(--accent); margin: 0 0 10px; letter-spacing: .06em; }
+  .show h3 { font-size: clamp(26px, 3.2vw, 34px); line-height: 1.25; margin: 0 0 14px; letter-spacing: -.01em; }
+  .show p { font-size: 18px; color: var(--muted); margin: 0 0 28px; }
+  .typed { border-radius: 16px; background: var(--surface); box-shadow: var(--shadow); padding: 16px 18px; max-width: 360px; }
+  .typed .k { font: 15px/1.5 ui-monospace, "SF Mono", Menlo, monospace; color: var(--muted); }
+  .typed .arrow { display: flex; align-items: center; gap: 8px; margin: 8px 0 6px; font-size: 12px; color: var(--muted); }
+  .typed .arrow::after { content: ""; flex: 1; height: 1px; background: var(--rule); }
+  .typed .v { font-size: 20px; font-weight: 600; }
+  .typed em { font-style: normal; color: var(--accent); }
+
+  /* Schemes */
+  .schemes { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .scheme { background: var(--surface); border-radius: 24px; padding: 28px 24px; box-shadow: var(--shadow); }
+  .glyph { width: 52px; height: 52px; border-radius: 14px; background: var(--tint); color: var(--accent);
+           display: flex; align-items: center; justify-content: center; font-size: 26px; font-weight: 700; margin-bottom: 18px; }
+  .scheme h3 { font-size: 21px; margin: 0 0 6px; }
+  .scheme p { margin: 0; color: var(--muted); font-size: 15px; }
+  .sp-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0 0; padding: 0; list-style: none; }
+  .sp-list li { font-size: 13px; padding: 3px 10px; border-radius: 999px; background: var(--bg-alt); }
+  section.alt .sp-list li { background: var(--tint); }
+
+  /* Feature grid */
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .card { background: var(--surface); border-radius: 24px; padding: 26px 24px; box-shadow: var(--shadow); }
+  .ico { width: 40px; height: 40px; border-radius: 11px; background: var(--tint); color: var(--accent);
+         display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .ico svg { width: 22px; height: 22px; }
+  .ico b { font-size: 18px; }
+  .card h3 { font-size: 18px; margin: 0 0 6px; }
+  .card p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  /* Privacy */
+  .privacy { border-radius: 36px; padding: 72px 48px; text-align: center; color: #f5f5f7;
+             background: radial-gradient(800px 400px at 50% 0%, #1f4f7a, transparent 70%), #08111b; }
+  .privacy .shield { width: 64px; height: 64px; margin: 0 auto 22px; color: #84c6f3; }
+  .privacy h2 { color: #fff; }
+  .privacy .sub { color: #a9b6c3; font-size: 18px; margin: 0; }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 48px; text-align: left; }
+  .facts div { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08); border-radius: 20px; padding: 24px; }
+  .facts h3 { font-size: 18px; margin: 0 0 6px; color: #fff; }
+  .facts p { margin: 0; color: #a9b6c3; font-size: 15px; }
+
+  /* Steps */
+  .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0; margin: 0; list-style: none; }
+  .steps li { background: var(--surface); border-radius: 24px; padding: 28px 24px; box-shadow: var(--shadow); font-size: 16px; }
+  .steps li::before { counter-increment: s; content: counter(s); display: flex; align-items: center; justify-content: center;
+                      width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: var(--on-accent);
+                      font-weight: 700; margin-bottom: 16px; }
+
+  /* Final CTA */
+  .final { text-align: center; }
+  .final img { width: 96px; height: 96px; border-radius: 22px; margin: 0 auto 24px; box-shadow: 0 12px 32px rgba(26,109,176,.25); }
+  .final h2 { margin-bottom: 10px; }
+  .final p { color: var(--muted); font-size: 18px; margin: 0 0 32px; }
+
+  footer { border-top: 1px solid var(--rule); padding: 32px 0 48px; font-size: 14px; color: var(--muted); }
+  footer .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; }
+  footer nav { display: flex; gap: 24px; }
+  footer nav a { color: var(--muted); }
+  footer nav a:hover { color: var(--fg); }
+
+  section.first { padding-top: 230px; }
+  @media (max-width: 860px) {
+    .hero .wrap { grid-template-columns: 1fr; text-align: center; padding-top: 56px; gap: 0; }
+    .hero .copy { padding-bottom: 48px; }
+    .hero .lead { margin-left: auto; margin-right: auto; }
+    .checks { justify-content: center; }
+    .phone { width: min(270px, 76%); margin-bottom: -120px; border-radius: 44px; padding: 9px; }
+    .phone img { border-radius: 36px; }
+    section { padding: 80px 0; }
+    section.first { padding-top: 180px; }
+    .show, .show.flip { grid-template-columns: 1fr; gap: 28px; }
+    .show.flip .panel { order: 0; }
+    .show + .show { margin-top: 72px; }
+    .panel { padding: 32px 20px 0; border-radius: 26px; }
+    .panel img { border-radius: 20px 20px 0 0; }
+    .schemes, .grid { grid-template-columns: 1fr 1fr; }
+    .facts, .steps { grid-template-columns: 1fr; }
+    .privacy { padding: 56px 22px; border-radius: 28px; }
+  }
+  @media (max-width: 520px) {
+    .wrap { padding: 0 16px; }
+    .nav .links a.plain { display: none; }
+    .schemes, .grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
-<header>
-  <h1>乐言输入法</h1>
-  <p>乐言输入法是一款 iOS 中文输入法。词典、语言模型和手写识别模型都装在键盘里，输入在手机本地完成；键盘不联网，不上传输入内容。没有账号、广告和内购。支持 iOS 16 及以上。</p>
-  <nav>
-    <a href="https://apps.apple.com/cn/app/id6805488406">App Store</a>
-    <a href="https://wang1ang.github.io/blackcam-support/leyan-privacy.html">隐私政策</a>
-    <a href="https://wang1ang.github.io/blackcam-support/leyan-support.html">支持</a>
-  </nav>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#"><img src="img/icon.png" alt="" width="28" height="28">乐言输入法</a>
+    <nav class="links">
+      <a class="plain" href="#typing">怎么打字</a>
+      <a class="plain" href="#schemes">输入方式</a>
+      <a class="plain" href="#privacy">隐私</a>
+      <a class="pill" href="https://apps.apple.com/cn/app/id6805488406">下载</a>
+    </nav>
+  </div>
 </header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="copy">
+      <span class="eyebrow">iOS 中文输入法</span>
+      <h1>乐言输入法<span>输入只在本机完成</span></h1>
+      <p class="lead">词典、语言模型和手写识别都装在键盘里。全拼、双拼、五笔、手写都能用，键盘不联网，不上传输入内容。</p>
+      <a class="cta" href="https://apps.apple.com/cn/app/id6805488406">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.6-.75 3-.75s1.79.75 3.01.72c1.25-.02 2.04-1.13 2.8-2.25.88-1.29 1.24-2.54 1.26-2.6-.03-.01-2.42-.93-2.47-3.71zM14.07 5.85c.64-.77 1.07-1.85.95-2.92-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.78-.97 2.83 1.02.08 2.07-.52 2.71-1.29z"/></svg>
+        在 App Store 下载
+      </a>
+      <p class="cta-note">支持 iOS 16 及以上</p>
+      <ul class="checks">
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>不联网</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>无广告</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>无内购</li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5l4 4 8-9"/></svg>无需账号</li>
+      </ul>
+    </div>
+    <div class="phone"><img src="img/hero.jpg" alt="乐言输入法在备忘录里输入“可以输入完整的一句话”" width="640" height="1385"></div>
+  </div>
+</div>
+
 <main>
-  <section>
-    <h2>输入方式</h2>
-    <ul>
-      <li>全拼：26键、9键</li>
-      <li>双拼：微软、小鹤、自然码、搜狗、智能ABC、拼音加加、紫光、国标，共 8 种方案</li>
-      <li>五笔86</li>
-      <li>手写</li>
-      <li>在键盘内的“键盘布局”页切换以上方式</li>
-    </ul>
+  <section id="typing" class="first">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">怎么打字</p>
+        <h2>一句话连着打完</h2>
+        <p class="sub">以下截图均为真机微软双拼输入</p>
+      </div>
+
+      <div class="show">
+        <div class="panel"><img src="img/sentence.jpg" alt="整句输入：首选为“注重隐私的输入法”" width="780" height="643" loading="lazy"></div>
+        <div>
+          <p class="num">01</p>
+          <h3>整句输入</h3>
+          <p>连续打一整句，按整句给出候选，不用一个词一个词地选。</p>
+          <div class="typed"><div class="k">vu vs yn si de uu ru fa</div><div class="arrow">首选</div><div class="v">注重隐私的输入法</div></div>
+        </div>
+      </div>
+
+      <div class="show flip">
+        <div class="panel"><img src="img/correct.jpg" alt="逐字改选：点中“错”字，弹出它的替换候选" width="780" height="643" loading="lazy"></div>
+        <div>
+          <p class="num">02</p>
+          <h3>逐字改选</h3>
+          <p>首选里哪个字不对，点它，在弹出的候选里只改这一个字，其余不动。</p>
+          <div class="typed"><div class="k">na li co le dm na li</div><div class="arrow">点“错”改字</div><div class="v">哪里<em>错</em>了点哪里</div></div>
+        </div>
+      </div>
+
+      <div class="show">
+        <div class="panel light"><img src="img/mixed.jpg" alt="中英混输：首选为“再修一个bug就睡觉”" width="780" height="643" loading="lazy"></div>
+        <div>
+          <p class="num">03</p>
+          <h3>中英混输</h3>
+          <p>拼音里夹着英文单词，直接接着打。</p>
+          <div class="typed"><div class="k">zl xq yi ge bug jq uv jc</div><div class="arrow">首选</div><div class="v">再修一个<em>bug</em>就睡觉</div></div>
+        </div>
+      </div>
+    </div>
   </section>
-  <section>
-    <h2>打字</h2>
-    <ul>
-      <li>整句输入：连续打一句拼音，按整句给出候选</li>
-      <li>逐字改选：在首选里单独改其中某个字</li>
-      <li>联想：上屏后显示下一个词的候选，可关闭</li>
-      <li>学习输入习惯：候选按你的使用调整，数据保存在本机，可关闭</li>
-      <li>简体 / 繁体切换：繁体按台湾用字转换</li>
-      <li>半角 / 全角切换：全角作用于字母、符号、数字和空格</li>
-      <li>计算：输入 1+1，联想栏显示 =2</li>
-      <li>表情、符号、数字键盘</li>
-    </ul>
+
+  <section id="schemes" class="alt">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">输入方式</p>
+        <h2>全拼、双拼、五笔、手写</h2>
+        <p class="sub">按习惯选一种，随时可换</p>
+      </div>
+      <div class="schemes">
+        <div class="scheme"><div class="glyph">拼</div><h3>全拼</h3><p>26键、9键两种布局</p></div>
+        <div class="scheme"><div class="glyph">双</div><h3>双拼</h3><p>8 种方案</p>
+          <ul class="sp-list"><li>微软</li><li>小鹤</li><li>自然码</li><li>搜狗</li><li>智能ABC</li><li>拼音加加</li><li>紫光</li><li>国标</li></ul></div>
+        <div class="scheme"><div class="glyph">五</div><h3>五笔</h3><p>五笔86</p></div>
+        <div class="scheme"><div class="glyph">写</div><h3>手写</h3><p>在键盘上直接手写</p></div>
+      </div>
+    </div>
   </section>
+
   <section>
-    <h2>操作</h2>
-    <ul>
-      <li>在空格键上滑动移动光标</li>
-      <li>26键第一排上滑输入数字</li>
-      <li>长按删除键连续删除；⇧ 可锁定大写</li>
-      <li>按键震动：关、轻、中、强四档</li>
-    </ul>
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">功能</p>
+        <h2>常用的都在</h2>
+      </div>
+      <div class="grid">
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M4 11h7M4 16h5"/><path d="M14 14l3 3 3-3M17 9v8"/></svg></div><h3>联想</h3><p>上屏后显示下一个词的候选，可关闭。</p></div>
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="M8 15l3-4 3 2 4-6"/></svg></div><h3>学习输入习惯</h3><p>候选按你的使用调整，数据保存在本机，可关闭。</p></div>
+        <div class="card"><div class="ico"><b>繁</b></div><h3>简体 / 繁体</h3><p>一键切换，繁体按台湾用字转换。</p></div>
+        <div class="card"><div class="ico"><b>Ａ</b></div><h3>半角 / 全角</h3><p>一键切换半角、全角字符。</p></div>
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 9h6M8 6v6M13 8h6M5 16h6M13 15h6M13 18h6"/></svg></div><h3>计算</h3><p>输入 1+1，联想栏显示 =2。</p></div>
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M8.5 14.5c1 1.2 2.1 1.8 3.5 1.8s2.5-.6 3.5-1.8"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.6"/></svg></div><h3>表情和符号</h3><p>表情、符号页和数字键盘。</p></div>
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="14" width="18" height="5" rx="1.5"/><path d="M7 9H17M7 9l2.5-2.5M7 9l2.5 2.5M17 9l-2.5-2.5M17 9l-2.5 2.5"/></svg></div><h3>空格移动光标</h3><p>在空格键上滑动移动光标。</p></div>
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M12 8V3M9.5 5.5L12 3l2.5 2.5"/></svg></div><h3>上滑出数字</h3><p>26键第一排上滑输入数字；长按删除连续删除，⇧ 可锁定大写。</p></div>
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="4" width="8" height="16" rx="2"/><path d="M4.5 9v6M19.5 9v6M2 11v2M22 11v2"/></svg></div><h3>按键震动</h3><p>关、轻、中、强四档。</p></div>
+      </div>
+    </div>
   </section>
-  <section>
-    <h2>键盘定制</h2>
-    <ul>
-      <li>尺寸样式：高度、行距、键距、圆角、字号、阴影、按键颜色、按键质感、按键动画</li>
-      <li>26键：每个字母键可单独设置长按、上滑动作和颜色；可全部显示为大写</li>
-      <li>数字键盘：自定义按键</li>
-      <li>空格旁标点：可开关</li>
-    </ul>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">键盘定制</p>
+        <h2>按你的手感调</h2>
+        <p class="sub">在 App 里调整</p>
+      </div>
+      <div class="grid">
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></div><h3>尺寸样式</h3><p>高度、行距、键距、圆角、字号、阴影、按键颜色、按键质感、按键动画。</p></div>
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h.01M11 10h.01M15 10h.01M8 14h8" stroke-linecap="round" stroke-width="2"/></svg></div><h3>26键</h3><p>每个字母键可单独设置长按、上滑动作和颜色；可全部显示为大写。</p></div>
+        <div class="card"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="4" width="4.5" height="4.5" rx="1"/><rect x="9.75" y="4" width="4.5" height="4.5" rx="1"/><rect x="15.5" y="4" width="4.5" height="4.5" rx="1"/><rect x="4" y="9.75" width="4.5" height="4.5" rx="1"/><rect x="9.75" y="9.75" width="4.5" height="4.5" rx="1"/><rect x="15.5" y="9.75" width="4.5" height="4.5" rx="1"/><rect x="4" y="15.5" width="16" height="4.5" rx="1"/></svg></div><h3>数字键盘</h3><p>自定义按键；空格旁标点可开关。</p></div>
+      </div>
+    </div>
   </section>
-  <section>
-    <h2>隐私与权限</h2>
-    <ul>
-      <li>不开“完全访问”也能正常输入；开启后只用于按键震动</li>
-      <li>键盘不联网，不上传输入内容</li>
-    </ul>
+
+  <section id="privacy">
+    <div class="wrap">
+      <div class="privacy">
+        <svg class="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.6-3.2 8.3-7.5 9.5-4.3-1.2-7.5-4.9-7.5-9.5V6L12 3z"/><path d="M8.8 12.2l2.2 2.2 4.3-4.6" stroke-linecap="round"/></svg>
+        <h2>输入的内容只在你的手机上</h2>
+        <p class="sub">解码、联想、手写识别都在键盘内完成</p>
+        <div class="facts">
+          <div><h3>不联网</h3><p>键盘不联网，不上传输入内容。</p></div>
+          <div><h3>完全访问可不开</h3><p>不开也能正常输入；开启后只用于按键震动。</p></div>
+          <div><h3>没有账号</h3><p>没有账号、广告和内购。</p></div>
+        </div>
+      </div>
+    </div>
   </section>
-  <section>
-    <h2>启用方法</h2>
-    <ul>
-      <li>打开“设置” &gt; “通用” &gt; “键盘” &gt; “键盘”</li>
-      <li>选择“添加新键盘”，在第三方键盘中选择“乐言输入法”</li>
-      <li>在任意输入框长按地球键切换到乐言输入法</li>
-    </ul>
+
+  <section class="alt">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">启用方法</p>
+        <h2>三步开始用</h2>
+        <p class="sub">安装后在系统设置里添加键盘</p>
+      </div>
+      <ol class="steps">
+        <li>打开“设置” &gt; “通用” &gt; “键盘” &gt; “键盘”</li>
+        <li>选择“添加新键盘”，在第三方键盘中选择“乐言输入法”</li>
+        <li>在任意输入框长按地球键，切换到乐言输入法</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <img src="img/icon.png" alt="" width="96" height="96">
+      <h2>乐言输入法</h2>
+      <p>不联网 · 无广告 · 无内购</p>
+      <a class="cta" href="https://apps.apple.com/cn/app/id6805488406">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c-.02-2.3 1.88-3.4 1.97-3.46-1.07-1.57-2.74-1.78-3.33-1.8-1.42-.14-2.77.83-3.49.83-.72 0-1.83-.81-3.01-.79-1.55.02-2.98.9-3.78 2.29-1.61 2.8-.41 6.94 1.16 9.21.77 1.11 1.68 2.36 2.88 2.31 1.16-.05 1.6-.75 3-.75s1.79.75 3.01.72c1.25-.02 2.04-1.13 2.8-2.25.88-1.29 1.24-2.54 1.26-2.6-.03-.01-2.42-.93-2.47-3.71zM14.07 5.85c.64-.77 1.07-1.85.95-2.92-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.78-.97 2.83 1.02.08 2.07-.52 2.71-1.29z"/></svg>
+        在 App Store 下载
+      </a>
+    </div>
   </section>
 </main>
+
 <footer>
-  <nav>
-    <a href="https://apps.apple.com/cn/app/id6805488406">在 App Store 下载</a>
-  </nav>
+  <div class="wrap">
+    <span>乐言输入法</span>
+    <nav>
+      <a href="https://apps.apple.com/cn/app/id6805488406">App Store</a>
+      <a href="https://wang1ang.github.io/blackcam-support/leyan-privacy.html">隐私政策</a>
+      <a href="https://wang1ang.github.io/blackcam-support/leyan-support.html">支持</a>
+    </nav>
+  </div>
 </footer>
 </body>
 </html>
