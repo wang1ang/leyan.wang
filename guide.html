@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>逐字改选和上屏 - 乐言输入法使用教程</title>
+<meta name="description" content="乐言输入法使用教程：整句输入后，点击首选里的某个字单独替换，修改拼音，以及空格、回车、上拖、标点等上屏方式。">
+<link rel="canonical" href="https://leyan.wang/guide.html">
+<link rel="icon" href="img/icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "在乐言输入法里逐字改选并上屏",
+  "description": "整句输入后，点击首选里不对的字单独替换，确认后上屏。",
+  "inLanguage": "zh-CN",
+  "step": [
+    {"@type": "HowToStep", "position": 1, "name": "输入整句", "text": "连续输入一整句拼音，候选栏第一行显示首选整句，每个字都可以单独点击。", "url": "https://leyan.wang/guide.html#sentence"},
+    {"@type": "HowToStep", "position": 2, "name": "点击要改的字", "text": "点击首选里不对的字，这个字下方弹出替换候选；在字上向下滑动或长按也可以。", "url": "https://leyan.wang/guide.html#pick"},
+    {"@type": "HowToStep", "position": 3, "name": "选择替换候选", "text": "点击替换候选完成替换。之后自动前进到下一个字，候选排在第一行句子后面，可以继续逐字确认。", "url": "https://leyan.wang/guide.html#next"},
+    {"@type": "HowToStep", "position": 4, "name": "需要时修改拼音", "text": "替换候选弹出时再点击同一个字，这个字显示原始按键，可以退格或重新输入；再点击一次退出。", "url": "https://leyan.wang/guide.html#edit"},
+    {"@type": "HowToStep", "position": 5, "name": "上屏", "text": "按空格、回车或点击首选末尾的箭头上屏首选整句；也可以在首选上向上拖动，或者直接输入标点。", "url": "https://leyan.wang/guide.html#commit"}
+  ],
+  "isPartOf": {"@type": "WebSite", "name": "乐言输入法", "url": "https://leyan.wang/"}
+}
+</script>
+<style>
+  :root { --bg:#fff; --bg-alt:#f5f7fa; --fg:#1d1d1f; --muted:#6e6e73; --accent:#1a6db0; --tint:#eaf4fc; --rule:rgba(0,0,0,.08); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#05080d; --bg-alt:#0b1119; --fg:#f5f5f7; --muted:#9aa3ad; --accent:#84c6f3; --tint:#10263b; --rule:rgba(255,255,255,.09); }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); line-height:1.75;
+         font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; -webkit-font-smoothing:antialiased; }
+  a { color:var(--accent); text-decoration:none; }
+  img { max-width:100%; height:auto; display:block; border-radius:16px; }
+  .wrap { max-width:760px; margin:0 auto; padding:0 20px; }
+  header { border-bottom:1px solid var(--rule); }
+  header .wrap { display:flex; align-items:center; gap:10px; height:56px; font-weight:600; }
+  header img { width:28px; height:28px; border-radius:7px; }
+  header a.home { color:var(--fg); display:flex; align-items:center; gap:10px; }
+  header a.dl { margin-left:auto; font-size:14px; }
+  h1 { font-size:clamp(28px,5vw,40px); line-height:1.2; margin:48px 0 12px; }
+  .lead { color:var(--muted); font-size:18px; margin:0 0 32px; }
+  h2 { font-size:22px; margin:48px 0 8px; scroll-margin-top:16px; }
+  h2 .n { color:var(--accent); margin-right:8px; }
+  p, li { font-size:16px; }
+  .typed { display:flex; flex-wrap:wrap; align-items:center; gap:8px 12px; background:var(--bg-alt); border-radius:12px; padding:12px 16px; margin:16px 0; font-size:15px; }
+  .typed .k { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; }
+  .typed .arrow { color:var(--muted); font-size:13px; }
+  .typed .v { font-weight:600; }
+  .note { color:var(--muted); font-size:14px; }
+  figure { margin:20px 0; }
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:15px; }
+  th, td { text-align:left; padding:10px 8px; border-bottom:1px solid var(--rule); vertical-align:top; }
+  th { color:var(--muted); font-weight:600; }
+  kbd { font-family:inherit; background:var(--tint); border-radius:6px; padding:1px 7px; }
+  footer { margin:64px 0 40px; padding-top:20px; border-top:1px solid var(--rule); color:var(--muted); font-size:14px; }
+  footer a { margin-right:16px; }
+</style>
+</head>
+<body>
+<header><div class="wrap"><a class="home" href="/"><img src="img/icon.png" alt="" width="28" height="28">乐言输入法</a><a class="dl" href="https://apps.apple.com/cn/app/id6805488406">App Store 下载</a></div></header>
+<main class="wrap">
+  <h1>逐字改选和上屏</h1>
+  <p class="lead">乐言输入法按整句给出候选。首选里个别字不对时，不用删掉重新输入，点击这个字单独替换即可。本页说明怎么改字，以及怎么把文字上屏。</p>
+
+  <h2 id="sentence"><span class="n">1</span>输入整句</h2>
+  <p>连续输入一整句的拼音，不用逐词选择。候选栏第一行显示首选整句，首选里的每个字都可以单独点击；首选后面横向排列其余整句候选。</p>
+  <div class="typed"><span class="k">vu vs yn si de uu ru fa</span><span class="arrow">微软双拼，首选</span><span class="v">注重隐私的输入法</span></div>
+
+  <h2 id="pick"><span class="n">2</span>点击要改的字</h2>
+  <p>点击首选里不对的那个字，字的下方弹出它的替换候选。在这个字上向下滑动，或者长按这个字，效果相同。</p>
+  <figure><img src="img/correct.jpg" alt="逐字改选：点中“错”字，弹出它的替换候选" width="780" height="643" loading="lazy"></figure>
+  <div class="typed"><span class="k">na li co le dm na li</span><span class="arrow">点击“错”字替换</span><span class="v">哪里错了点哪里</span></div>
+  <p>候选太多时，可以按声调筛选：首选末尾箭头后面有 <kbd>ˉ</kbd> <kbd>ˊ</kbd> <kbd>ˇ</kbd> <kbd>ˋ</kbd> <kbd>˙</kbd> 五个按钮，点击后只保留这个声调的候选。</p>
+
+  <h2 id="next"><span class="n">3</span>选择替换候选</h2>
+  <p>点击替换候选，这个字就换好了，此时还没有上屏。换完后自动前进到下一个字并保持高亮，下一个字的候选直接排在第一行句子后面，可以接着逐字确认；确认到最后一个字时，整句自动上屏。</p>
+  <p>选过的字会固定下来，后面继续输入不会改动它。默认开启的「更正后整句重解」会按选过的字重新计算整句，没有选过的字可能随之调整；在 App 里关闭后，改字只替换这一个字，其余不变。</p>
+
+  <h2 id="edit"><span class="n">4</span>需要时修改拼音</h2>
+  <p>如果拼音本身输错了：替换候选弹出时，再点击同一个字，这个字会显示原始按键（全拼显示拼音，双拼显示双拼码），可以退格或重新输入，整句随之重新计算。再点击一次退出修改。</p>
+  <p>也可以长按空格左右滑动，把组合里的光标移到要修改的位置。</p>
+  <p>点击第一行空白处或者候选区域以外，退出改字，回到整句预览。</p>
+
+  <h2 id="commit"><span class="n">5</span>上屏</h2>
+  <p>上屏就是把候选栏里的文字正式写入输入框。乐言输入法里，点击首选是改字，不是上屏。上屏用下面这些方式：</p>
+  <table>
+    <tr><th>操作</th><th>结果</th></tr>
+    <tr><td>按空格</td><td>上屏首选整句，包括已经改过的字</td></tr>
+    <tr><td>点击首选末尾的箭头</td><td>同空格</td></tr>
+    <tr><td>按回车</td><td>上屏首选整句，不换行</td></tr>
+    <tr><td>在首选上向上拖动</td><td>拖动时首选变灰，松手上屏</td></tr>
+    <tr><td>点击后面的其他整句候选</td><td>上屏这条候选</td></tr>
+    <tr><td>直接输入标点、数字或表情</td><td>先上屏首选整句，再接上这个标点、数字或表情</td></tr>
+    <tr><td>逐字确认到最后一个字</td><td>整句自动上屏</td></tr>
+  </table>
+  <p class="note">正在修改拼音、组合光标不在末尾时，第一次按空格或回车只退出修改，再按一次才上屏。</p>
+
+  <h2 id="setting"><span class="n">6</span>改成点击首选直接上屏</h2>
+  <p>习惯点击候选直接上屏的话，在乐言输入法 App 里关闭「点击首选改字」。关闭后点击首选上屏整句，长按某个字改字。</p>
+
+  <footer><a href="/">乐言输入法首页</a><a href="/#faq">常见问题</a><a href="https://apps.apple.com/cn/app/id6805488406">App Store</a></footer>
+</main>
+</body>
+</html>
