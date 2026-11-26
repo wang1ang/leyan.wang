@@ -382,6 +382,7 @@
   .show + .show { margin-top: 96px; }
   .show.flip { grid-template-columns: .85fr 1.15fr; }
   .show.flip .panel { order: 2; }
+  .show.solo, .show.solo.flip { grid-template-columns: 1fr; }
   .panel { border-radius: 32px; padding: 56px 44px 0; background: var(--panel-dark); overflow: hidden; }
   .panel.light { background: var(--panel-light); }
   .panel img { border-radius: 26px 26px 0 0; box-shadow: 0 -4px 30px rgba(0,0,0,.25); }
@@ -586,6 +587,13 @@
           <p class="note">显示英文使用系统离线翻译，需要 iOS 18 及以上。</p>
         </div>
       </div>
+      <div class="show solo">
+        <div>
+          <p class="num">06</p>
+          <h3>输入框显示按键</h3>
+          <p>按键显示在输入框，可以很容易看出哪里打错了。长按空格可以在里面移动光标位置，修改打错的地方。</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -598,7 +606,7 @@
       <div class="show">
         <div class="panel"><img src="img/japanese.jpg" alt="日文：双拼输入 ziybviqq，首选为“自由が丘”，上方显示假名读音" width="780" height="688" loading="lazy"></div>
         <div>
-          <p class="num">06</p>
+          <p class="num">07</p>
           <h3>用拼音输入日文</h3>
           <p>把「简 | 繁 | 日」切换到「日」，按汉字的拼音输入，直接得到日文，候选上方显示假名读音。比如输入「涩谷站」的拼音 seguzhan，得到「渋谷駅」。全拼、9键、双拼、五笔都可以，手写和语音也会输出日文；习惯罗马字的话，也可以选择日文罗马字布局。</p>
           <p class="note"><a href="japanese.html">用拼音输入日文教程</a></p>
@@ -608,7 +616,7 @@
       <div class="show flip">
         <div class="panel light"><img src="img/jyut.jpg" alt="粤拼：输入 faan tai dou dak，首选为“繁體都得”" width="780" height="648" loading="lazy"></div>
         <div>
-          <p class="num">07</p>
+          <p class="num">08</p>
           <h3>粤拼</h3>
           <p>用粤拼输入，输出香港繁体，同样支持整句输入和 26键纠错。</p>
           <div class="typed"><div class="k">faan tai dou dak</div><div class="arrow">首选</div><div class="v">繁體都得</div></div>
